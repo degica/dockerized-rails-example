@@ -1,0 +1,36 @@
+version: '2'
+services:
+  web: &app_base
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+      args:
+        - APP_HOME=${PWD}
+    ports:
+     - "3000:3000"
+    command: rails s -p 3000 -b 0.0.0.0
+    links:
+     - db
+    volumes:
+      - .:${PWD}
+    environment:
+      DATABASE_URL: mysql2://root:test123@db:3306
+  spring:
+    <<: *app_base
+    ports: []
+    command: spring server
+    stdin_open: true
+    tty: true
+    pid: host
+    environment:
+      DATABASE_URL: mysql2://root:test123@db:3306
+      SPRING_SOCKET: /tmp/spring/spring.sock
+    volumes:
+      - .:${PWD}
+      - spring:/tmp/spring
+  db:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+volumes:
+  spring:

@@ -1,0 +1,14 @@
+# Ignore bundler config.
+/.bundle
+/vendor/bundle
+/vendor/cache
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+/build
+
+# Ignore rbenv generated file
+.ruby-version
+
+# Note: Please do not ignore public/assets.  It is required for the packaged build to work.
